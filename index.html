@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Textarea</title>
+
+	<style>
+		textarea {
+			width: 1000px;
+			height: 500px;
+		}
+	</style>
+</head>
+<body>
+	<textarea onkeyup="breakLine(this, 10, 8)"></textarea>
+
+	<script>
+		function breakLine(textarea, limitRow, charPerRow) {
+			var lines = textarea.value.split("\n");
+
+			for(var i = 0; i < lines.length; i++) {
+
+				if(lines[i].length <= charPerRow) continue;
+				var j = 0;
+				var space = charPerRow;
+
+				while (j++ <= charPerRow) {
+					if(lines[i].charAt(j) === " ") space = j;
+				}
+
+				lines[i + 1] = lines[i].substring(space) + (lines[i + 1] || "");
+				lines[i] = lines[i].substring(0, space);
+
+			}
+			textarea.value = lines.slice(0, limitRow).join("\n");
+		}
+	</script>
+</body>
+</html>
